@@ -1,50 +1,60 @@
 class HeapSort{
 
+
     public static void main(String[] args){
         int[] A = {3,6,10,18,8,7,25,40};
         sort(A);
-        show(A);
+        //show(A);
     }
-    
+
     public static void sort(int[] A){
-        buildHeap(A, A.length);
+        int n = A.length;
+        for(int i = (n/2)-1; i >= 0; i--){
+            siftdown(A, n, i);
+        }
 
-        //do the sort here. If I even need to do it after heapifying it.
-    }
+        System.out.println("Done Heapify");
+        show(A);
+        System.out.println("Starting Sort");
 
-    // Function to build a Max-Heap from the Array
-    static void buildHeap(int arr[], int n)
-    {
-        //last non-leaf node
-        int startIdx = (n/2) - 1;
-        for (int i = startIdx; i >= 0; i--) {
-            heapify(arr, n, i);
+        for(int i = n-1; i >= 0; i--){
+            //always root and i
+            swap(A,0, i);
+            siftdown(A, i, 0);
+            show(A);
         }
     }
 
-    static void heapify(int arr[], int n, int i){
-        int largest = i; // Initialize largest as root
-        int left = 2 * (i+1); // left = 2*i + 1
-        int right = 2 * (i+2); // right = 2*i + 2
+    public static void swap(int[] A, int index1, int index2){
+        int temp = A[index1];
+        A[index1] = A[index2];
+        A[index2] = temp;
+    }
 
-        if (left < n && arr[left] > arr[largest]){
+    public static void siftdown(int A[], int n, int i){
+       // int n = arr.length;//might need to check this for the -1 on the length
+        int largest = i; // Initialize largest as root
+
+        int left = (2*i)+1;
+        if (left < n && A[left] > A[i]){
             largest = left;
         }
-        if (right < n && arr[right] > arr[largest]){
+
+        int right = (2*i)+2;
+        if (right < n && A[right] > A[largest]){
             largest = right;
         }
 
         // If largest is not root
-        if (largest != i) {
-            int swap = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = swap;
-            //heapify the subtree
-            heapify(arr, n, largest);
+        if(largest != i){
+            //System.out.println("Swapping largest");
+            swap(A, i, largest);
+            //show(arr);
+            siftdown(A,n, largest);
         }
     }
 
-    public static void show(int[] A){
+    static void show(int A[]){
         String arrayOut = "{" + A[0];
         for(int i = 1; i < A.length; i++){
             arrayOut += "," + A[i];
