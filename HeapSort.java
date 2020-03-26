@@ -25,12 +25,6 @@ class HeapSort{
         }
     }
 
-    public static void swap(int[] A, int index1, int index2){
-        int temp = A[index1];
-        A[index1] = A[index2];
-        A[index2] = temp;
-    }
-
     public static void siftdown(int A[], int n, int i){
        // int n = arr.length;//might need to check this for the -1 on the length
         int largest = i; // Initialize largest as root
@@ -52,6 +46,12 @@ class HeapSort{
             //show(arr);
             siftdown(A,n, largest);
         }
+    }
+
+    public static void swap(int[] A, int index1, int index2){
+        int temp = A[index1];
+        A[index1] = A[index2];
+        A[index2] = temp;
     }
 
     static void show(int A[]){
